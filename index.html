@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afo Kicks | Premium Sneakers</title>
+    <style>
+         .colors {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.color-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.color-btn.active {
+    border: 2px solid #111827; /* Dark border when selected */
+    transform: scale(1.2);     /* Makes it slightly bigger */
+}
+.color-btn:hover { border-color: #ccc; }
+
+.red { background-color: #ef4444; }
+.blue { background-color: #3b82f6; }
+.black { background-color: #111827; }
+    body {
+        background-color: #e5e7eb; /* Soft gray background */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        justify-content: center; /* Centers horizontally */
+        align-items: center;     /* Centers vertically */
+        min-height: 100vh;       /* Makes the body take up the full screen height */
+        margin: 0;
+    }
+
+    .card {
+        background: white;
+        width: 350px;
+        border-radius: 20px;
+        overflow: hidden; /* Clips the image corners to match the card */
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-10px); /* Makes the card "pop" up when touched */
+    }
+
+    .shoe-img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover; /* Ensures the photo fits the box perfectly */
+    }
+
+    .content {
+        padding: 25px;
+    }
+
+    .tag {
+        background: #fee2e2;
+        color: #ef4444;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .price {
+        font-size: 24px;
+        font-weight: bold;
+        color: #111827;
+        margin: 10px 0;
+    }
+
+    .btn {
+        width: 100%;
+        background: #111827;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+
+    .hidden { display: none; }
+
+    #confirmation {
+        margin-top: 15px;
+        color: #059669;
+        font-weight: bold;
+        text-align: center;
+    }
+    /* This only triggers when the screen is smaller than 480px (like a phone) */
+@media (max-width: 768px) {
+    .card {
+        flex-direction: column; /* Stack the image on top of the text */
+        width: 95%;             /* Make it fill the phone screen width */
+        margin: 10px auto;
+    }
+
+    .shoe-img {
+        width: 100%;            /* Fills the left half of the card */
+        height: 100%;           /* Fills the full height of the card */
+    }
+
+    .content {
+        padding: 20px;          /* Give the text some breathing room */
+    }
+}
+</style>
+    <link rel="stylesheet" href="style.css">
+   
+ </head>
+<body>
+
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff" alt="Nike Red" class="shoe-img">
+        
+        <div class="content">
+            <span class="tag">New Arrival</span>
+            <h1>Afo Kicks Red Edition</h1>
+            <div class="colors">
+    <span class="color-btn red" data-image="https://images.unsplash.com/photo-1542291026-7eec264c27ff"data-price="$150.00"></span>
+    <span class="color-btn blue" data-image="https://images.unsplash.com/photo-1597045566677-8cf032ed6634?w=500"data-price="$120.00"></span>
+    <span class="color-btn black" data-image="https://images.unsplash.com/photo-1549298916-b41d501d3772"data-price="$100.00"></span>
+</div>
+            <p id="price-display" class="price">$120.00</p>
+            <p class="description">High-performance sneakers designed for comfort and speed. Perfect for the street or the gym.</p>
+            
+            <button id="buy-button" class="btn">Add to Cart</button>
+            <div id="confirmation" class="hidden">Item added to cart! 🛒</div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Identify ALL the parts of our page first
+    const buyBtn = document.getElementById('buy-button');
+    const confirmMsg = document.getElementById('confirmation');
+    const shoeImg = document.querySelector('.shoe-img');
+    const colorBtns = document.querySelectorAll('.color-btn');
+    const priceDisplay = document.getElementById('price-display');
+
+    // 2. Logic for the "Add to Cart" button
+    buyBtn.addEventListener('click', function() {
+        confirmMsg.classList.remove('hidden');
+        buyBtn.innerText = "Added to Cart! 👟";
+        buyBtn.style.backgroundColor = "#059669";
+        buyBtn.style.cursor = "default";
+    });
+
+    // 3. Logic for the Color Circles (Image + Price Swapper)
+    colorBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // A. Remove 'active' from all circles so only one is picked at a time
+            colorBtns.forEach(b => b.classList.remove('active'));
+
+            // B. Add 'active' to the specific circle you just clicked
+            this.classList.add('active');
+
+            // C. Swap Image and Price (You already have this part!)
+            shoeImg.src = this.getAttribute('data-image');
+            priceDisplay.innerText = this.getAttribute('data-price');
+        });
+    });
+
+    </script>
+</body>
+</html>
