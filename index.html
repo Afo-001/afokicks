@@ -147,12 +147,28 @@
     const colorBtns = document.querySelectorAll('.color-btn');
     const priceDisplay = document.getElementById('price-display');
 
-    // 2. Logic for the "Add to Cart" button
+    // 2. // 2. Logic for the "Add to Cart" button (WhatsApp Edition)
     buyBtn.addEventListener('click', function() {
+        // First, show the success message on the screen
         confirmMsg.classList.remove('hidden');
-        buyBtn.innerText = "Added to Cart! 👟";
+        buyBtn.innerText = "Connecting to WhatsApp... 👟";
         buyBtn.style.backgroundColor = "#059669";
-        buyBtn.style.cursor = "default";
+        
+        // Prepare the Business Data
+        const myNumber = 254718089910;
+        const productName = document.querySelector('h1').innerText;
+        const currentPrice = priceDisplay.innerText;
+        
+        // Create the message: "Hi! I want to buy Afo Kicks Red Edition for $100.00"
+        const message = "Hi Afo Kicks! I want to order the " + productName + " for " + currentPrice;
+        
+        // Build the "Magic Link"
+        const whatsappUrl = "https://wa.me/" + myNumber + "?text=" + encodeURIComponent(message);
+
+        // Wait 1 second so the user sees the "Added" message, then jump to WhatsApp
+        setTimeout(() => {
+            window.location.href = whatsappUrl;
+        }, 1000);
     });
 
     // 3. Logic for the Color Circles (Image + Price Swapper)
